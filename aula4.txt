@@ -1,0 +1,54 @@
+/*exemplo de subconsulta correlacionada */
+SELECT a.nome
+FROM cliente a
+WHERE 1 < (SELECT COUNT(b.idcliente)
+           FROM venda b
+			  WHERE b.idcliente = a.id) 
+
+/* mesmo exemplo de outra forma    */			  
+SELECT a.nome, COUNT(b.idcliente)
+FROM cliente a, venda b
+WHERE a.id = b.idcliente
+GROUP BY 1
+HAVING COUNT(b.idcliente) > 1
+
+
+/*subconsulta com select*/
+SELECT c.id, c.nome, (SELECT COUNT(v.idcliente)
+                      FROM venda v
+						    WHERE v.idcliente = c.id)AS qtde
+FROM cliente c
+/*subconsulta com select2*/
+SELECT f.descricao,(SELECT COUNT(v.idcliente)
+                      FROM venda v
+						    WHERE v.idformapagto = f.id)AS 
+FROM formapagto f
+
+
+
+
+/*exemplo de case */
+SELECT c.id,c.nome, 
+                   case 
+                   when tipo ="F" then "Pessoa Fisica"
+                   when tipo = "j" then "Pessoa Juridica"
+                   ELSE "sem Classificacao"
+                   END TipoPeesoa
+FROM cliente c
+
+
+/*exemolo de case
+SELECT c.id,c.nome, 
+              case 
+                   when c.tipo ="F" then 
+                     (SELECT r.nome FROM representante r
+                      WHERE r.id = c.idrepresentante)
+                      
+                   when c.tipo = "j" then "Pessoa Juridica"
+                   when c.tipo IS NULL then "Valor Nulo"
+						 ELSE "sem Classificacao"
+                   END AS TipoPeesoa
+FROM cliente c
+
+
+

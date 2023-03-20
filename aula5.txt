@@ -1,0 +1,31 @@
+/* criando usuario */ 
+CREATE USER 'fatec'@'localhost' IDENTIFIED BY 'dificil';
+/*concedendo acesso a todos os parametros do banco de daddos */
+GRANT ALL PRIVILEGES ON *.* TO 'novousuario'@'localhost'; 
+   /*quais privilegios*/*banco de dados/*qual tabela/ 
+   
+   alterando a permissao
+   GRANT UPDATE, DELETE  ON *.* TO  'nome-do-usuario'@'localhost';
+   
+   exemplos de concedente de permissoes
+   visualizaçaõ de tabelas
+GRANT SELECT ON empresa.cliente TO 'fatec'@'localhost';
+GRANT SELECT ON empresa.venda TO 'fatec'@'localhost';
+acões nas tabelas
+GRANT INSERT,UPDATE, DELETE ON empresa.cargo TO 'fatec'@'localhost';
+
+
+****sempre que for dar permissoes de insert update e delete devo colocar select****
+GRANT SELECT ON empresa.cargo TO 'fatec'@'localhost';
+
+
+revogar permissoes
+REVOKE UPDATE ON *.* FROM 'nome-do-usuario'@'localhost;
+exemplo
+REVOKE DELETE  ON empresa.cargo FROM 'fatec'@'localhost';
+
+
+
+
+apagar usuario
+DROP USER 'nome-do-usuario'@'localhost';
